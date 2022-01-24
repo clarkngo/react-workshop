@@ -1,18 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <div className='greeting' 
-        style={{ background: 'black', color: 'white' }}
-        onClick={ ()=> alert('hello') }
-        >
-        Hello 
-      </div>
-  
-    </div>
-  );
-}
-
+import React from 'react';
+const App = props => (
+  <div>
+    <h1>My App</h1>
+    <br />
+    Hello React!
+  </div>
+)
 export default App;
