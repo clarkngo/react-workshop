@@ -11,7 +11,6 @@ class App extends Component {
       email: '',
       errors: []
     };
-    this.validateUsernameOnBlur = this.validateUsernameOnBlur.bind(this);
   }
 
   displayForm() {
@@ -26,7 +25,7 @@ class App extends Component {
     )
   }
 
-  validateUsernameOnBlur(event) {
+  validateUsernameOnBlur = (event) => {
     console.log("I should validate whatever is in ", event.target.value);
     this.setState();
   }
