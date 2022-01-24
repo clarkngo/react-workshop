@@ -1,28 +1,41 @@
 import React, {Component} from 'react';
 
-const Greeting = props => <p>Hello {props.name}!</p>;
+const Header = props => <h1>{props.title}</h1>;
+
+const InventoryItem = (props) => (
+  <div className='InventoryItem'>
+    <h2>{props.itemName}</h2>
+    <h2>{props.itemPrice}</h2>
+  </div>
+);
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.title = 'React App';
-    this.state = { clickCounter: 0};
-  }
-
-  renderClickcount() {
-    return <p>I've been clicked {this.state.clickCounter} times!</p>
+    this.title = 'BuyStuff';
+    this.state = { 
+      items: [
+        { itemName: "Shoe", itemPrice: 5},
+        { itemName: "Sock", itemPrice: 3},
+      ]
+    };
   }
 
   render() {
     return (
       <div>
-        <h1>My App</h1>
-        <h1>{this.title}</h1>
-        <Greeting name="User" />
-        {this.renderClickcount()}
+        <Header title={this.title} />
+        <InventoryItem 
+          itemName={this.state.items[0].itemName} 
+          itemPrice={this.state.items[0].itemPrice}
+        />
+        <InventoryItem 
+          itemName={this.state.items[1].itemName} 
+          itemPrice={this.state.items[1].itemPrice}
+        />
       </div>
-    )
+    );
   }
 }
 
