@@ -1,39 +1,48 @@
 import React, {Component} from 'react';
 
-const Header = props => <h1>{props.title}</h1>;
-
-const InventoryItem = (props) => (
-  <div className='InventoryItem'>
-    <h2>{props.itemName}</h2>
-    <h2>{props.itemPrice}</h2>
-  </div>
-);
-
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.title = 'BuyStuff';
     this.state = { 
-      items: [
-        { itemName: "Shoe", itemPrice: 5},
-        { itemName: "Sock", itemPrice: 3},
-      ]
+      username: '',
+      password: '',
+      passwordConfirmation: '',
+      email: '',
+      errors: []
     };
+    this.validateUsernameOnBlur = this.validateUsernameOnBlur.bind(this);
+  }
+
+  displayForm() {
+    return (
+      <div>
+        Username: <input type="text" onBlur={this.validateUsernameOnBlur} /><br />
+        Password: <input type="text" /><br />
+        Password Confirmation: <input type="text" /><br />
+        <br />
+        <button onClick={this.submitForm}>Submit</button>
+      </div>
+    )
+  }
+
+  validateUsernameOnBlur(event) {
+    console.log("I should validate whatever is in ", event.target.value);
+    this.setState();
+  }
+
+  submitForm(event) {
+    event.preventDefault();
+    console.log("Submitting form now..");
+    console.log(event);
   }
 
   render() {
     return (
-      <div>
-        <Header title={this.title} />
-        <InventoryItem 
-          itemName={this.state.items[0].itemName} 
-          itemPrice={this.state.items[0].itemPrice}
-        />
-        <InventoryItem 
-          itemName={this.state.items[1].itemName} 
-          itemPrice={this.state.items[1].itemPrice}
-        />
+      <div className="App">
+        Create Account
+        <hr />
+        {this.displayForm()}
       </div>
     );
   }
