@@ -5,45 +5,36 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
-      fieldLength: 0,
-    };
-    this.updateFieldLength = this.updateFieldLength.bind(this);
-  }
-
-  updateFieldLength = (event) => {
-    const fieldLength = event.target.value.length;
-    this.setState({ fieldLength });
-  }
-
-  validateTextLength = (event) => {
-    const text = event.target.value;
-    if (text.length < 100) {
-      console.log("character count must be 100 or more");
+    this.state = {
+      showSecret : false
     }
   }
 
-  displayForm() {
+  secretMessage() {
+    if (!this.state.showSecret) {
+      return;
+    }
     return (
-      <div>
-        <textarea onChange={this.updateFieldLength} onBlur={this.validateTextLength}></textarea>
-        <button onClick={this.submitForm}>Submit</button>
-        <p>Character count: {this.state.fieldLength}</p>
+      <div className='secret-message'>
+        I am the secret message!
       </div>
     );
   }
 
-  submitForm(event) {
-    event.preventDefault();
+  toggleSecretMessage() {
+    this.setState({
+      showSecret: !this.state.showSecret
+    });
   }
 
   render() {
     return (
       <div>
-        <h1>Blog Post Writer</h1>
-        <hr />
-        <h2>Write your post here</h2>
-        {this.displayForm()}
+        <button onClick={this.toggleSecretMessage.bind(this)}>Click to { this.state.showSecret ? "hide" : "show"} the secret message!</button>
+        <br/>
+        1st approach in-line conditional: { this.state.showSecret ? this.secretMessage() : null }
+        <br/>
+        2nd approach without in-line conditional: {this.secretMessage()}
       </div>
     );
   }
