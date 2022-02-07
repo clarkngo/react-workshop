@@ -45,14 +45,12 @@ class App extends Component {
           {question.question}
         </p>
         <br />
-        <button className="question-choice"
-          onClick={() => this.answerQuestion(index, question.possibleAnswers[0])}>
-          {question.possibleAnswers[0]}
-        </button>
-        <button className="question-choice"
-          onClick={() => this.answerQuestion(index, question.possibleAnswers[1])}>
-          {question.possibleAnswers[1]}
-        </button>
+        {
+          question.possibleAnswers.map((answer, answerIndex) => (
+            <button className="question-choice" key={`q-${index}-a-${answerIndex}`} 
+              onClick={ ()=> this.answerQuestion(index, answer)}>{answer}
+            </button>
+        ))}
         <br />
         <p className="result-correct">
           Your answer is correct!
@@ -82,12 +80,16 @@ class App extends Component {
     console.log("New player score:", playerScore);
   }
 
+  renderQuestions() {
+    return this.state.questions.map((question, index) => this.displayQuestion(index));
+  }
+
   render() {
     return (
       <div className="App">
         <h1>Quiz Show!</h1>
         <hr />
-        {this.state.questions.map((question, index) => this.displayQuestion(index))}
+        {this.renderQuestions()}
       </div>
     );
   }
