@@ -6,35 +6,88 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSecret : false
+      playerScore: 0,
+      questions: [
+        {
+          question: "What animal barks?",
+          possibleAnswers: ["Dog", "Cat"],
+          rightAnswer: "Dog",
+          playerChoice: null
+        },
+        {
+          question: "What animal is more closely related to a tiger?",
+          possibleAnswers: ["Dog", "Cat"],
+          rightAnswer: "Cat",
+          playerChoice: null
+        },
+        {
+          question: "What animal is more closely related to a wolf?",
+          possibleAnswers: ["Dog", "Cat"],
+          rightAnswer: "Dog",
+          playerChoice: null
+        },
+        {
+          question: "What animal is best known for playing fetch?",
+          possibleAnswers: ["Dog", "Cat"],
+          rightAnswer: "Dog",
+          playerChoice: null
+        }
+      ]
     }
   }
+  
 
-  secretMessage() {
-    if (!this.state.showSecret) {
-      return;
-    }
+  displayQuestion(index) {
+    const question = this.state.questions[index];
     return (
-      <div className='secret-message'>
-        I am the secret message!
+      <div className="question-display" key={`q-${index}`}>
+        <p className="question">
+          {question.question}
+        </p>
+        <br />
+        <button className="question-choice"
+          onClick={() => this.answerQuestion(index, question.possibleAnswers[0])}>
+          {question.possibleAnswers[0]}
+        </button>
+        <button className="question-choice"
+          onClick={() => this.answerQuestion(index, question.possibleAnswers[1])}>
+          {question.possibleAnswers[1]}
+        </button>
+        <br />
+        <p className="result-correct">
+          Your answer is correct!
+        </p>
+        <p className="result-incorrect">
+          Your answer is incorrect!
+        </p>
       </div>
     );
   }
 
-  toggleSecretMessage() {
+  answerQuestion(index, choice) {
+    const answeredQuestion = this.state.questions[index];
+    answeredQuestion.playerChoice = choice;
+    const allQuestions = this.state.questions;
+    allQuestions[index] = answeredQuestion;
     this.setState({
-      showSecret: !this.state.showSecret
+      questions: allQuestions
+    }, () => {
+      this.updatePlayerScore();
     });
+  }
+
+  updatePlayerScore() {
+    const playerScore = this.state.questions.filter(q => q.rightAnswer === q.playerChoice).length;
+    this.setState({ playerScore });
+    console.log("New player score:", playerScore);
   }
 
   render() {
     return (
-      <div>
-        <button onClick={this.toggleSecretMessage.bind(this)}>Click to { this.state.showSecret ? "hide" : "show"} the secret message!</button>
-        <br/>
-        1st approach in-line conditional: { this.state.showSecret ? this.secretMessage() : null }
-        <br/>
-        2nd approach without in-line conditional: {this.secretMessage()}
+      <div className="App">
+        <h1>Quiz Show!</h1>
+        <hr />
+        {this.state.questions.map((question, index) => this.displayQuestion(index))}
       </div>
     );
   }
